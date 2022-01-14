@@ -1,13 +1,11 @@
-package com.hiteshchopra.github.data.remote.model
+package com.hiteshchopra.github.domain.model
 
 import com.google.gson.annotations.SerializedName
-import com.hiteshchopra.github.data.mapper.DataModel
-import com.hiteshchopra.github.data.mapper.EntityMapper
-import com.hiteshchopra.github.domain.model.RepoOwnerDomain
+import com.hiteshchopra.github.domain.mapper.DomainModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RepoOwnerData(
+data class RepoItemOwnerDomain(
   @SerializedName("avatar_url")
   val avatarUrl: String?,
   @SerializedName("events_url")
@@ -44,29 +42,4 @@ data class RepoOwnerData(
   val type: String?,
   @SerializedName("url")
   val url: String?
-) : DataModel()
-
-class RepoOwnerMapper : EntityMapper<RepoOwnerDomain, RepoOwnerData> {
-  override fun mapToDomain(entity: RepoOwnerData): RepoOwnerDomain {
-    return RepoOwnerDomain(
-      avatarUrl = entity.avatarUrl,
-      eventsUrl = entity.eventsUrl,
-      followersUrl = entity.followersUrl,
-      followingUrl = entity.followingUrl,
-      gistsUrl = entity.gistsUrl,
-      gravatarId = entity.gravatarId,
-      htmlUrl = entity.htmlUrl,
-      id = entity.id,
-      login = entity.login,
-      nodeId = entity.nodeId,
-      organizationsUrl = entity.organizationsUrl,
-      receivedEventsUrl = entity.receivedEventsUrl,
-      reposUrl = entity.reposUrl,
-      siteAdmin = entity.siteAdmin,
-      starredUrl = entity.starredUrl,
-      subscriptionsUrl = entity.subscriptionsUrl,
-      type = entity.type,
-      url = entity.url
-    )
-  }
-}
+) : DomainModel()

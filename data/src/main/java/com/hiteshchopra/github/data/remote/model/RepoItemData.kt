@@ -3,21 +3,23 @@ package com.hiteshchopra.github.data.remote.model
 import com.google.gson.annotations.SerializedName
 import com.hiteshchopra.github.data.mapper.DataModel
 import com.hiteshchopra.github.data.mapper.EntityMapper
-import com.hiteshchopra.github.domain.model.GithubRepoItemDomain
-import kotlinx.serialization.Serializable
+import com.hiteshchopra.github.domain.model.RepoItemDomain
 
-@Serializable
-data class GithubRepoItemData(
+data class RepoItemData(
   @SerializedName("archive_url")
-  var archiveUrl: String?=null,
+  val archiveUrl: String?,
+  @SerializedName("archived")
+  val archived: Boolean?,
   @SerializedName("assignees_url")
-  val assigneesUrl: String?=null,
+  val assigneesUrl: String?,
   @SerializedName("blobs_url")
-  val blobsUrl: String?=null,
+  val blobsUrl: String?,
   @SerializedName("branches_url")
-  val branchesUrl: String?=null,
+  val branchesUrl: String?,
+  @SerializedName("clone_url")
+  val cloneUrl: String?,
   @SerializedName("collaborators_url")
-  val collaboratorsUrl: String?=null,
+  val collaboratorsUrl: String?,
   @SerializedName("comments_url")
   val commentsUrl: String?,
   @SerializedName("commits_url")
@@ -28,16 +30,24 @@ data class GithubRepoItemData(
   val contentsUrl: String?,
   @SerializedName("contributors_url")
   val contributorsUrl: String?,
+  @SerializedName("created_at")
+  val createdAt: String?,
+  @SerializedName("default_branch")
+  val defaultBranch: String?,
   @SerializedName("deployments_url")
   val deploymentsUrl: String?,
   @SerializedName("description")
   val description: String?,
+  @SerializedName("disabled")
+  val disabled: Boolean?,
   @SerializedName("downloads_url")
   val downloadsUrl: String?,
   @SerializedName("events_url")
   val eventsUrl: String?,
   @SerializedName("fork")
   val fork: Boolean?,
+  @SerializedName("forks_count")
+  val forksCount: Int?,
   @SerializedName("forks_url")
   val forksUrl: String?,
   @SerializedName("full_name")
@@ -48,12 +58,28 @@ data class GithubRepoItemData(
   val gitRefsUrl: String?,
   @SerializedName("git_tags_url")
   val gitTagsUrl: String?,
+  @SerializedName("git_url")
+  val gitUrl: String?,
+  @SerializedName("has_downloads")
+  val hasDownloads: Boolean?,
+  @SerializedName("has_issues")
+  val hasIssues: Boolean?,
+  @SerializedName("has_pages")
+  val hasPages: Boolean?,
+  @SerializedName("has_projects")
+  val hasProjects: Boolean?,
+  @SerializedName("has_wiki")
+  val hasWiki: Boolean?,
+  @SerializedName("homepage")
+  val homepage: String?,
   @SerializedName("hooks_url")
   val hooksUrl: String?,
   @SerializedName("html_url")
   val htmlUrl: String?,
   @SerializedName("id")
   val id: Int?,
+  @SerializedName("is_template")
+  val isTemplate: Boolean?,
   @SerializedName("issue_comment_url")
   val issueCommentUrl: String?,
   @SerializedName("issue_events_url")
@@ -64,26 +90,42 @@ data class GithubRepoItemData(
   val keysUrl: String?,
   @SerializedName("labels_url")
   val labelsUrl: String?,
+  @SerializedName("language")
+  val language: Any?,
   @SerializedName("languages_url")
   val languagesUrl: String?,
   @SerializedName("merges_url")
   val mergesUrl: String?,
   @SerializedName("milestones_url")
   val milestonesUrl: String?,
+  @SerializedName("mirror_url")
+  val mirrorUrl: String?,
   @SerializedName("name")
   val name: String?,
   @SerializedName("node_id")
   val nodeId: String?,
   @SerializedName("notifications_url")
   val notificationsUrl: String?,
+  @SerializedName("open_issues_count")
+  val openIssuesCount: Int?,
   @SerializedName("owner")
   val repoOwnerData: RepoOwnerData?,
+  @SerializedName("permissions")
+  val repoItemPermissionsData: RepoItemPermissionsData?,
   @SerializedName("private")
   val priv: Boolean?,
   @SerializedName("pulls_url")
   val pullsUrl: String?,
+  @SerializedName("pushed_at")
+  val pushedAt: String?,
   @SerializedName("releases_url")
   val releasesUrl: String?,
+  @SerializedName("size")
+  val size: Int?,
+  @SerializedName("ssh_url")
+  val sshUrl: String?,
+  @SerializedName("stargazers_count")
+  val stargazersCount: Int?,
   @SerializedName("stargazers_url")
   val stargazersUrl: String?,
   @SerializedName("statuses_url")
@@ -92,66 +134,109 @@ data class GithubRepoItemData(
   val subscribersUrl: String?,
   @SerializedName("subscription_url")
   val subscriptionUrl: String?,
+  @SerializedName("svn_url")
+  val svnUrl: String?,
   @SerializedName("tags_url")
   val tagsUrl: String?,
   @SerializedName("teams_url")
   val teamsUrl: String?,
+  @SerializedName("template_repository")
+  val templateRepository: Any?,
+  @SerializedName("topics")
+  val topics: List<String>?,
   @SerializedName("trees_url")
   val treesUrl: String?,
+  @SerializedName("updated_at")
+  val updatedAt: String?,
   @SerializedName("url")
-  val url: String?
+  val url: String?,
+  @SerializedName("visibility")
+  val visibility: String?,
+  @SerializedName("watchers_count")
+  val watchersCount: Int?
 ) : DataModel()
 
-class GithubRepoItemMapper(private val repoOwnerMapper: RepoOwnerMapper) :
-  EntityMapper<GithubRepoItemDomain, GithubRepoItemData> {
-  override fun mapToDomain(entity: GithubRepoItemData): GithubRepoItemDomain {
-    return GithubRepoItemDomain(
+class RepoItemMapper(
+  private val repoOwnerMapper: RepoOwnerMapper,
+  private val repoItemPermissionMapper: RepoItemPermissionMapper
+) :
+  EntityMapper<RepoItemDomain, RepoItemData> {
+  override fun mapToDomain(entity: RepoItemData): RepoItemDomain {
+    return RepoItemDomain(
       archiveUrl = entity.archiveUrl,
+      archived = entity.archived,
       assigneesUrl = entity.assigneesUrl,
       blobsUrl = entity.blobsUrl,
       branchesUrl = entity.branchesUrl,
+      cloneUrl = entity.cloneUrl,
       collaboratorsUrl = entity.collaboratorsUrl,
       commentsUrl = entity.commentsUrl,
       commitsUrl = entity.commitsUrl,
       compareUrl = entity.compareUrl,
       contentsUrl = entity.contentsUrl,
       contributorsUrl = entity.contributorsUrl,
+      createdAt = entity.createdAt,
+      defaultBranch = entity.defaultBranch,
       deploymentsUrl = entity.deploymentsUrl,
       description = entity.description,
+      disabled = entity.disabled,
       downloadsUrl = entity.downloadsUrl,
       eventsUrl = entity.eventsUrl,
       fork = entity.fork,
+      forksCount = entity.forksCount,
       forksUrl = entity.forksUrl,
       fullName = entity.fullName,
       gitCommitsUrl = entity.gitCommitsUrl,
       gitRefsUrl = entity.gitRefsUrl,
       gitTagsUrl = entity.gitTagsUrl,
+      gitUrl = entity.gitUrl,
+      hasDownloads = entity.hasDownloads,
+      hasIssues = entity.hasIssues,
+      hasPages = entity.hasPages,
+      hasProjects = entity.hasProjects,
+      hasWiki = entity.hasWiki,
+      homepage = entity.homepage,
       hooksUrl = entity.hooksUrl,
       htmlUrl = entity.htmlUrl,
       id = entity.id,
+      isTemplate = entity.isTemplate,
       issueCommentUrl = entity.issueCommentUrl,
       issueEventsUrl = entity.issueEventsUrl,
       issuesUrl = entity.issuesUrl,
       keysUrl = entity.keysUrl,
       labelsUrl = entity.labelsUrl,
+      language = entity.language,
       languagesUrl = entity.languagesUrl,
       mergesUrl = entity.mergesUrl,
       milestonesUrl = entity.milestonesUrl,
+      mirrorUrl = entity.mirrorUrl,
       name = entity.name,
       nodeId = entity.nodeId,
       notificationsUrl = entity.notificationsUrl,
-      repoOwnerDomain = entity.repoOwnerData?.let { repoOwnerMapper.mapToDomain(it) },
+      openIssuesCount = entity.openIssuesCount,
+      repoItemOwnerDomain = entity.repoOwnerData?.let { repoOwnerMapper.mapToDomain(it) },
+      permissions = entity.repoItemPermissionsData?.let { repoItemPermissionMapper.mapToDomain(it) },
       priv = entity.priv,
       pullsUrl = entity.pullsUrl,
+      pushedAt = entity.pushedAt,
       releasesUrl = entity.releasesUrl,
+      size = entity.size,
+      sshUrl = entity.sshUrl,
+      stargazersCount = entity.stargazersCount,
       stargazersUrl = entity.stargazersUrl,
       statusesUrl = entity.statusesUrl,
       subscribersUrl = entity.subscribersUrl,
       subscriptionUrl = entity.subscriptionUrl,
+      svnUrl = entity.svnUrl,
       tagsUrl = entity.tagsUrl,
       teamsUrl = entity.teamsUrl,
+      templateRepository = entity.templateRepository,
+      topics = entity.topics,
       treesUrl = entity.treesUrl,
-      url = entity.url
+      updatedAt = entity.updatedAt,
+      url = entity.url,
+      visibility = entity.visibility,
+      watchersCount = entity.watchersCount
     )
   }
 }

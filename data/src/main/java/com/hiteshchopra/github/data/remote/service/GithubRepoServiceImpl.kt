@@ -1,7 +1,7 @@
 package com.hiteshchopra.github.data.remote.service
 
 import com.hiteshchopra.github.data.remote.utils.HttpRoutes
-import com.hiteshchopra.github.data.remote.model.GithubRepoItemData
+import com.hiteshchopra.github.data.remote.model.RepoItemData
 import com.hiteshchopra.github.data.remote.utils.safeApiCall
 import com.hiteshchopra.github.domain.SafeResult
 import io.ktor.client.HttpClient
@@ -15,8 +15,8 @@ class GithubRepoServiceImpl(
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
 ) : GithubRepoService {
-  override suspend fun getPosts(): SafeResult<ArrayList<GithubRepoItemData>> {
-    return safeApiCall(dispatcher){
+  override suspend fun getPosts(): SafeResult<ArrayList<RepoItemData>> {
+    return safeApiCall(dispatcher) {
       client.get { url(HttpRoutes.REPOSITORIES) }
     }
   }
