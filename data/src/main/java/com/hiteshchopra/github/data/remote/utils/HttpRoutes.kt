@@ -4,7 +4,7 @@ object HttpRoutes {
 
   private const val BASE_URL = "https://api.github.com"
   fun getRepositoriesUrl(pageSize: Int, page: Int): String {
-    return "$BASE_URL/orgs/google/repos?page=$page&pageSize=$pageSize"
+    return "$BASE_URL/orgs/adobe/repos?page=$page&pageSize=$pageSize"
   }
 
 }

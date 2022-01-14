@@ -1,11 +1,13 @@
-package com.hiteshchopra.github.kotlin.ui
+package com.hiteshchopra.github.kotlin.ui.screens.home
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absolutePadding
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,16 +16,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.paging.LoadState
+import androidx.paging.LoadState.Error
+import androidx.paging.LoadState.Loading
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -33,14 +36,33 @@ import com.hiteshchopra.github.kotlin.model.RepoItemUI
 import com.hiteshchopra.github.kotlin.ui.components.DisplayPaginatedError
 import com.hiteshchopra.github.kotlin.ui.components.LoadingItem
 import com.hiteshchopra.github.kotlin.ui.components.LoadingView
+import com.hiteshchopra.github.kotlin.ui.screens.Screen
 import kotlinx.coroutines.flow.Flow
+import org.koin.androidx.compose.viewModel
+
+@Composable
+fun HomeScreen(navHostController: NavHostController) {
+  Column(modifier = Modifier.fillMaxHeight()) {
+    TopAppBar(
+      title = { Text(text = "KotlinKT") },
+      backgroundColor = Color(0xFF6200EE)
+    )
+    HomeScreenContent(navHostController)
+  }
+}
+
+@Composable
+fun HomeScreenContent(navHostController: NavHostController) {
+  val homeScreenVM by viewModel<HomeScreenVM>()
+  PetsList(navHostController = navHostController, items = homeScreenVM.paginatedRepos)
+}
 
 @Composable
 fun PetsList(navHostController: NavHostController, items: Flow<PagingData<RepoItemUI>>) {
-//  fun navigateToPet(pet: Pets) {
-//    val petJson = Gson().toJson(pet)
-//    navHostController.navigate("petDetails/$petJson")
-//  }
+  fun navigateToDetailsScreen(repoItemUI: RepoItemUI) {
+    val itemUIJson = Uri.encode(Gson().toJson(repoItemUI))
+    navHostController.navigate(Screen.Details.passRepoItem(itemUIJson))
+  }
 
   val lazyPhotoItems = items.collectAsLazyPagingItems()
 
@@ -55,7 +77,7 @@ fun PetsList(navHostController: NavHostController, items: Flow<PagingData<RepoIt
         Row(
           modifier = Modifier
             .padding(4.dp)
-//            .clickable { navigateToPet(pet = pet) }
+            .clickable { repo?.let { navigateToDetailsScreen(repoItemUI = it) } }
         ) {
           Image(
             painter = rememberCoilPainter(repo?.repoItemOwnerUI?.avatarUrl),
@@ -88,14 +110,14 @@ fun PetsList(navHostController: NavHostController, items: Flow<PagingData<RepoIt
       }
       lazyPhotoItems.apply {
         when {
-          loadState.refresh is LoadState.Loading -> {
+          loadState.refresh is Loading -> {
             item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
           }
-          loadState.append is LoadState.Loading -> {
+          loadState.append is Loading -> {
             item { LoadingItem() }
           }
-          loadState.refresh is LoadState.Error -> {
-            val e = lazyPhotoItems.loadState.refresh as LoadState.Error
+          loadState.refresh is Error -> {
+            val e = lazyPhotoItems.loadState.refresh as Error
             item {
               DisplayPaginatedError(
                 message = e.error.message ?: "Some Unknown Error Occurred",
@@ -104,8 +126,8 @@ fun PetsList(navHostController: NavHostController, items: Flow<PagingData<RepoIt
               )
             }
           }
-          loadState.append is LoadState.Error -> {
-            val e = lazyPhotoItems.loadState.append as LoadState.Error
+          loadState.append is Error -> {
+            val e = lazyPhotoItems.loadState.append as Error
             item {
               DisplayPaginatedError(
                 message = e.error.localizedMessage ?: "Some Unknown Error Occurred",

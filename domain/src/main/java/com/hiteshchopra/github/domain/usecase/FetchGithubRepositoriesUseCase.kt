@@ -1,7 +1,6 @@
 package com.hiteshchopra.github.domain.usecase
 
 import androidx.paging.PagingData
-import com.hiteshchopra.github.domain.SafeResult
 import com.hiteshchopra.github.domain.model.RepoItemDomain
 import com.hiteshchopra.github.domain.repo.IFetchRepositoriesRepo
 import kotlinx.coroutines.flow.Flow

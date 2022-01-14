@@ -4,6 +4,9 @@ plugins {
   id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.10'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
   compileSdk 31
 
@@ -13,6 +16,8 @@ android {
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles "consumer-rules.pro"
+
+    buildConfigField "String", "ACCESS_TOKEN", localProperties['token']
   }
 
   buildTypes {

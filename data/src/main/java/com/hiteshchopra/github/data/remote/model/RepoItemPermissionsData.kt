@@ -3,7 +3,6 @@ package com.hiteshchopra.github.data.remote.model
 import com.google.gson.annotations.SerializedName
 import com.hiteshchopra.github.data.mapper.DataModel
 import com.hiteshchopra.github.data.mapper.EntityMapper
-import com.hiteshchopra.github.domain.model.RepoItemOwnerDomain
 import com.hiteshchopra.github.domain.model.RepoItemPermissionsDomain
 
 data class RepoItemPermissionsData(

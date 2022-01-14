@@ -15,8 +15,8 @@ class GithubApplication : Application() {
     super.onCreate()
 
     startKoin {
-      /* Workaround for issue #1188 mentioned here
-       * https://github.com/InsertKoinIO/koin/issues/1188#issuecomment-970240532
+      /** Workaround for issue #1188 mentioned here
+       *  https://github.com/InsertKoinIO/koin/issues/1188#issuecomment-970240532
        **/
       androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
       androidContext(this@GithubApplication)
