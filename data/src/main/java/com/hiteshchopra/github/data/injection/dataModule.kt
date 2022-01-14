@@ -1,8 +1,8 @@
 package com.hiteshchopra.github.data.injection
 
-import com.hiteshchopra.github.data.remote.model.RepoItemMapper
-import com.hiteshchopra.github.data.remote.model.RepoItemPermissionMapper
-import com.hiteshchopra.github.data.remote.model.RepoOwnerMapper
+import com.hiteshchopra.github.data.remote.model.RepoItemDomainMapper
+import com.hiteshchopra.github.data.remote.model.RepoItemPermissionDomainMapper
+import com.hiteshchopra.github.data.remote.model.RepoOwnerDomainMapper
 import com.hiteshchopra.github.data.remote.service.GithubRepoService
 import com.hiteshchopra.github.data.remote.service.GithubRepoServiceImpl
 import com.hiteshchopra.github.data.repo.FetchRepositoriesRepo
@@ -16,13 +16,13 @@ import org.koin.dsl.module
 @ExperimentalSerializationApi val dataModule = module {
 
   single {
-    RepoItemPermissionMapper()
+    RepoItemPermissionDomainMapper()
   }
   single {
-    RepoOwnerMapper()
+    RepoOwnerDomainMapper()
   }
   single {
-    RepoItemMapper(get(), get())
+    RepoItemDomainMapper(get(), get())
   }
   single<GithubRepoService> { GithubRepoServiceImpl(HttpClient()) }
   single<IGithubRemoteSource> { GithubRemoteSource(GithubRepoService.create()) }

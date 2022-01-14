@@ -89,7 +89,7 @@ data class RepoItemDomain(
   @SerializedName("labels_url")
   val labelsUrl: String?,
   @SerializedName("language")
-  val language: Any?,
+  val language: String?,
   @SerializedName("languages_url")
   val languagesUrl: String?,
   @SerializedName("merges_url")

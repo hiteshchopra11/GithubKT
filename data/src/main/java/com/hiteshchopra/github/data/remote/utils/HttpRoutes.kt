@@ -3,5 +3,8 @@ package com.hiteshchopra.github.data.remote.utils
 object HttpRoutes {
 
   private const val BASE_URL = "https://api.github.com"
-  const val REPOSITORIES = "$BASE_URL/orgs/google/repos"
+  fun getRepositoriesUrl(pageSize: Int, page: Int): String {
+    return "$BASE_URL/orgs/google/repos?page=$page&pageSize=$pageSize"
+  }
+
 }

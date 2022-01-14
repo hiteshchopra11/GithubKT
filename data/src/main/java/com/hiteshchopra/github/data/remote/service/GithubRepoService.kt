@@ -10,7 +10,7 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface GithubRepoService {
-  suspend fun getPosts(): SafeResult<ArrayList<RepoItemData>>
+  suspend fun getPosts(pageSize: Int, page: Int): SafeResult<ArrayList<RepoItemData>>
 
   companion object {
     @ExperimentalSerializationApi fun create(): GithubRepoService {

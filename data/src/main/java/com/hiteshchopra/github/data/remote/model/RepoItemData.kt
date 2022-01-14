@@ -91,7 +91,7 @@ data class RepoItemData(
   @SerializedName("labels_url")
   val labelsUrl: String?,
   @SerializedName("language")
-  val language: Any?,
+  val language: String?,
   @SerializedName("languages_url")
   val languagesUrl: String?,
   @SerializedName("merges_url")
@@ -156,9 +156,9 @@ data class RepoItemData(
   val watchersCount: Int?
 ) : DataModel()
 
-class RepoItemMapper(
-  private val repoOwnerMapper: RepoOwnerMapper,
-  private val repoItemPermissionMapper: RepoItemPermissionMapper
+class RepoItemDomainMapper(
+  private val repoOwnerDomainMapper: RepoOwnerDomainMapper,
+  private val repoItemPermissionDomainMapper: RepoItemPermissionDomainMapper
 ) :
   EntityMapper<RepoItemDomain, RepoItemData> {
   override fun mapToDomain(entity: RepoItemData): RepoItemDomain {
@@ -214,8 +214,8 @@ class RepoItemMapper(
       nodeId = entity.nodeId,
       notificationsUrl = entity.notificationsUrl,
       openIssuesCount = entity.openIssuesCount,
-      repoItemOwnerDomain = entity.repoOwnerData?.let { repoOwnerMapper.mapToDomain(it) },
-      permissions = entity.repoItemPermissionsData?.let { repoItemPermissionMapper.mapToDomain(it) },
+      repoItemOwnerDomain = entity.repoOwnerData?.let { repoOwnerDomainMapper.mapToDomain(it) },
+      permissions = entity.repoItemPermissionsData?.let { repoItemPermissionDomainMapper.mapToDomain(it) },
       priv = entity.priv,
       pullsUrl = entity.pullsUrl,
       pushedAt = entity.pushedAt,

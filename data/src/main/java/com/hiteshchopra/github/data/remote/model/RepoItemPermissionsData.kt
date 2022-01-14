@@ -15,7 +15,7 @@ data class RepoItemPermissionsData(
   val push: Boolean?
 ) : DataModel()
 
-class RepoItemPermissionMapper : EntityMapper<RepoItemPermissionsDomain, RepoItemPermissionsData> {
+class RepoItemPermissionDomainMapper : EntityMapper<RepoItemPermissionsDomain, RepoItemPermissionsData> {
   override fun mapToDomain(entity: RepoItemPermissionsData): RepoItemPermissionsDomain {
     return RepoItemPermissionsDomain(
       admin = entity.admin,

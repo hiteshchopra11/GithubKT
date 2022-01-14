@@ -3,7 +3,7 @@ package com.hiteshchopra.github.kotlin
 import android.app.Application
 import com.hiteshchopra.github.data.injection.dataModule
 import com.hiteshchopra.github.domain.injection.domainModule
-import com.hiteshchopra.github.kotlin.di.appModules
+import com.hiteshchopra.github.kotlin.injection.appModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

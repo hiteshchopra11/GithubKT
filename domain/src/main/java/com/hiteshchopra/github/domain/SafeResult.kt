@@ -1,5 +1,8 @@
 package com.hiteshchopra.github.domain
 
+import com.hiteshchopra.github.domain.SafeResult.Failure
+import com.hiteshchopra.github.domain.SafeResult.Success
+
 sealed class SafeResult<out T> {
 
   data class Success<T>(val data: T) : SafeResult<T>()
@@ -10,4 +13,18 @@ sealed class SafeResult<out T> {
   ) : SafeResult<Nothing>()
 
   object NetworkError : SafeResult<Nothing>()
+}
+
+fun <T> SafeResult<T>.getSuccessOrNull(): T? {
+  return when (this) {
+    is Success -> this.data
+    else -> null
+  }
+}
+
+fun <T> SafeResult<T>.getErrorOrNull(): Failure? {
+  return when (this) {
+    is Failure -> this
+    else -> null
+  }
 }

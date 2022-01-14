@@ -48,4 +48,10 @@ dependencies {
   implementation "ch.qos.logback:logback-classic:1.2.3"
 
   implementation "io.ktor:ktor-client-gson:$ktor_version"
+
+  // Paging
+  implementation "androidx.paging:paging-runtime:$paging_version"
+
+  // Jetpack Compose integration
+  implementation "androidx.paging:paging-compose:1.0.0-alpha14"
 }

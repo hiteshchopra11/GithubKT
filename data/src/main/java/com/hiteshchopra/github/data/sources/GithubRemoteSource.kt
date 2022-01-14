@@ -7,7 +7,7 @@ import com.hiteshchopra.github.domain.SafeResult
 class GithubRemoteSource(
   private val githubRepoService: GithubRepoService
 ) : IGithubRemoteSource {
-  override suspend fun getPosts(): SafeResult<ArrayList<RepoItemData>> {
-    return githubRepoService.getPosts()
+  override suspend fun getPosts(pageSize: Int, page: Int): SafeResult<ArrayList<RepoItemData>> {
+    return githubRepoService.getPosts(pageSize, page)
   }
 }

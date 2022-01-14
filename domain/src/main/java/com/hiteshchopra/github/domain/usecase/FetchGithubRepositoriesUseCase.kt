@@ -1,18 +1,14 @@
 package com.hiteshchopra.github.domain.usecase
 
+import androidx.paging.PagingData
 import com.hiteshchopra.github.domain.SafeResult
 import com.hiteshchopra.github.domain.model.RepoItemDomain
 import com.hiteshchopra.github.domain.repo.IFetchRepositoriesRepo
+import kotlinx.coroutines.flow.Flow
 
 class FetchGithubRepositoriesUseCase(private val fetchRepositoriesRepo: IFetchRepositoriesRepo) :
-  BaseUseCase<SafeResult<List<RepoItemDomain>>, Unit> {
-
-  override suspend fun performAsync(): SafeResult<List<RepoItemDomain>> {
-    return when (val result = fetchRepositoriesRepo.fetchRepositories()) {
-      is SafeResult.Success -> SafeResult.Success(result.data)
-      is SafeResult.NetworkError -> result
-      is SafeResult.Failure -> result
-    }
+  BaseUseCase<Flow<PagingData<RepoItemDomain>>, Unit> {
+  override fun perform(): Flow<PagingData<RepoItemDomain>> {
+    return fetchRepositoriesRepo.fetchRepositories()
   }
-
 }

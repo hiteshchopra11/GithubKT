@@ -15,9 +15,9 @@ class GithubRepoServiceImpl(
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
 ) : GithubRepoService {
-  override suspend fun getPosts(): SafeResult<ArrayList<RepoItemData>> {
+  override suspend fun getPosts(pageSize: Int, page: Int): SafeResult<ArrayList<RepoItemData>> {
     return safeApiCall(dispatcher) {
-      client.get { url(HttpRoutes.REPOSITORIES) }
+      client.get { url(HttpRoutes.getRepositoriesUrl(pageSize, page)) }
     }
   }
 }

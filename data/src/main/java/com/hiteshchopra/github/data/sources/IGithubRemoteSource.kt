@@ -4,5 +4,9 @@ import com.hiteshchopra.github.data.remote.model.RepoItemData
 import com.hiteshchopra.github.domain.SafeResult
 
 interface IGithubRemoteSource {
-  suspend fun getPosts(): SafeResult<ArrayList<RepoItemData>>
+  companion object {
+    const val PAGE_SIZE_DEFAULT = 10
+  }
+
+  suspend fun getPosts(pageSize: Int, page: Int): SafeResult<ArrayList<RepoItemData>>
 }

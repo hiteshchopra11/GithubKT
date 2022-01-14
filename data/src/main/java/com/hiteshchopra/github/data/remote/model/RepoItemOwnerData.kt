@@ -46,7 +46,7 @@ data class RepoOwnerData(
   val url: String?
 ) : DataModel()
 
-class RepoOwnerMapper : EntityMapper<RepoItemOwnerDomain, RepoOwnerData> {
+class RepoOwnerDomainMapper : EntityMapper<RepoItemOwnerDomain, RepoOwnerData> {
   override fun mapToDomain(entity: RepoOwnerData): RepoItemOwnerDomain {
     return RepoItemOwnerDomain(
       avatarUrl = entity.avatarUrl,
