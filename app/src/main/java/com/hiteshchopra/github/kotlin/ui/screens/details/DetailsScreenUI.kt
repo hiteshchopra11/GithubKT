@@ -17,8 +17,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons.Filled
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -34,17 +40,18 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import com.google.accompanist.coil.rememberCoilPainter
+import com.hiteshchopra.github.kotlin.R.string
 import com.hiteshchopra.github.kotlin.model.RepoItemUI
 
 @Composable
 fun GithubRepoDetails(repo: RepoItemUI, navHostController: NavHostController) {
   MaterialTheme {
-    DetailsScreenContent(repo = repo)
+    DetailsScreenContent(repo = repo, navHostController)
   }
 }
 
 @Composable
-private fun DetailsScreenContent(repo: RepoItemUI) {
+private fun DetailsScreenContent(repo: RepoItemUI, navHostController: NavHostController) {
   // Context and Intent required for launching intent
   val intent = Intent(Intent.ACTION_VIEW, Uri.parse(repo.htmlUrl))
   val context = LocalContext.current

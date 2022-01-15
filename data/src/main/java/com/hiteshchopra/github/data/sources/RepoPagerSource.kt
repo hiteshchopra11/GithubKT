@@ -3,15 +3,15 @@ package com.hiteshchopra.github.data.sources
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.hiteshchopra.github.data.remote.model.RepoItemDomainMapper
+import com.hiteshchopra.github.data.remote.model.repo.RepoItemDomainMapper
 import com.hiteshchopra.github.domain.SafeResult.NetworkError
 import com.hiteshchopra.github.domain.SafeResult.Success
 import com.hiteshchopra.github.domain.getErrorOrNull
 import com.hiteshchopra.github.domain.getSuccessOrNull
-import com.hiteshchopra.github.domain.model.RepoItemDomain
+import com.hiteshchopra.github.domain.model.repo.RepoItemDomain
 import java.io.IOException
 
-class GithubPagerSource(
+class RepoPagerSource(
   private val githubRemoteSource: IGithubRemoteSource,
   private val repoItemDomainMapper: RepoItemDomainMapper
 ) : PagingSource<Int, RepoItemDomain>() {
@@ -20,7 +20,7 @@ class GithubPagerSource(
       // Start refresh at page 1 if undefined.
       val page = params.key ?: 1
       when (val result =
-        githubRemoteSource.getPosts(
+        githubRemoteSource.getRepos(
           IGithubRemoteSource.PAGE_SIZE_DEFAULT,
           page
         )

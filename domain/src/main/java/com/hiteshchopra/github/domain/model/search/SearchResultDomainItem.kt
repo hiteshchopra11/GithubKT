@@ -1,9 +1,11 @@
-package com.hiteshchopra.github.domain.model
+package com.hiteshchopra.github.domain.model.search
 
 import com.google.gson.annotations.SerializedName
 import com.hiteshchopra.github.domain.mapper.DomainModel
 
-data class RepoItemDomain(
+data class SearchResultDomainItem(
+  @SerializedName("allow_forking")
+  val allowForking: Boolean?,
   @SerializedName("archive_url")
   val archiveUrl: String?,
   @SerializedName("archived")
@@ -44,6 +46,8 @@ data class RepoItemDomain(
   val eventsUrl: String?,
   @SerializedName("fork")
   val fork: Boolean?,
+  @SerializedName("forks")
+  val forks: Int?,
   @SerializedName("forks_count")
   val forksCount: Int?,
   @SerializedName("forks_url")
@@ -75,7 +79,7 @@ data class RepoItemDomain(
   @SerializedName("html_url")
   val htmlUrl: String?,
   @SerializedName("id")
-  val id: Int?,
+  val id: Int,
   @SerializedName("is_template")
   val isTemplate: Boolean?,
   @SerializedName("issue_comment_url")
@@ -92,24 +96,26 @@ data class RepoItemDomain(
   val language: String?,
   @SerializedName("languages_url")
   val languagesUrl: String?,
+  @SerializedName("license")
+  val license: SearchResultDomainLicence?,
   @SerializedName("merges_url")
   val mergesUrl: String?,
   @SerializedName("milestones_url")
   val milestonesUrl: String?,
   @SerializedName("mirror_url")
-  val mirrorUrl: String?,
+  val mirrorUrl: Any?,
   @SerializedName("name")
   val name: String?,
   @SerializedName("node_id")
   val nodeId: String?,
   @SerializedName("notifications_url")
   val notificationsUrl: String?,
+  @SerializedName("open_issues")
+  val openIssues: Int?,
   @SerializedName("open_issues_count")
   val openIssuesCount: Int?,
   @SerializedName("owner")
-  val repoItemOwnerDomain: RepoItemOwnerDomain?,
-  @SerializedName("permissions")
-  val permissions: RepoItemPermissionsDomain?,
+  val owner: SearchResultDomainOwner?,
   @SerializedName("private")
   val priv: Boolean?,
   @SerializedName("pulls_url")
@@ -118,6 +124,8 @@ data class RepoItemDomain(
   val pushedAt: String?,
   @SerializedName("releases_url")
   val releasesUrl: String?,
+  @SerializedName("score")
+  val score: Double?,
   @SerializedName("size")
   val size: Int?,
   @SerializedName("ssh_url")
@@ -138,8 +146,6 @@ data class RepoItemDomain(
   val tagsUrl: String?,
   @SerializedName("teams_url")
   val teamsUrl: String?,
-  @SerializedName("template_repository")
-  val templateRepository: Any?,
   @SerializedName("topics")
   val topics: List<String>?,
   @SerializedName("trees_url")
@@ -150,6 +156,8 @@ data class RepoItemDomain(
   val url: String?,
   @SerializedName("visibility")
   val visibility: String?,
+  @SerializedName("watchers")
+  val watchers: Int?,
   @SerializedName("watchers_count")
   val watchersCount: Int?
 ) : DomainModel()

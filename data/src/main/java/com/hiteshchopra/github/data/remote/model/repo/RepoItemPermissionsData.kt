@@ -1,9 +1,9 @@
-package com.hiteshchopra.github.data.remote.model
+package com.hiteshchopra.github.data.remote.model.repo
 
 import com.google.gson.annotations.SerializedName
 import com.hiteshchopra.github.data.mapper.DataModel
 import com.hiteshchopra.github.data.mapper.EntityMapper
-import com.hiteshchopra.github.domain.model.RepoItemPermissionsDomain
+import com.hiteshchopra.github.domain.model.repo.RepoItemPermissionsDomain
 
 data class RepoItemPermissionsData(
   @SerializedName("admin")

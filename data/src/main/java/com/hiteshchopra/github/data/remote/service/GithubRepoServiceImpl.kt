@@ -1,7 +1,8 @@
 package com.hiteshchopra.github.data.remote.service
 
 import com.hiteshchopra.github.data.BuildConfig
-import com.hiteshchopra.github.data.remote.model.RepoItemData
+import com.hiteshchopra.github.data.remote.model.repo.RepoItemData
+import com.hiteshchopra.github.data.remote.model.search.SearchResultData
 import com.hiteshchopra.github.data.remote.utils.HttpRoutes
 import com.hiteshchopra.github.data.remote.utils.safeApiCall
 import com.hiteshchopra.github.domain.SafeResult
@@ -18,7 +19,7 @@ class GithubRepoServiceImpl(
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
 ) : GithubRepoService {
-  override suspend fun getPosts(pageSize: Int, page: Int): SafeResult<ArrayList<RepoItemData>> {
+  override suspend fun getRepos(pageSize: Int, page: Int): SafeResult<ArrayList<RepoItemData>> {
     return safeApiCall(dispatcher) {
       client.get {
         /**
@@ -29,7 +30,27 @@ class GithubRepoServiceImpl(
         headers {
           append(HttpHeaders.Authorization, "token ${BuildConfig.ACCESS_TOKEN}")
         }
-        url(HttpRoutes.getRepositoriesUrl(pageSize, page))
+        url(HttpRoutes.getAllRepositoriesUrl(pageSize = pageSize, page = page))
+      }
+    }
+  }
+
+  override suspend fun getSearchResults(
+    query: String,
+    perPage: Int,
+    page: Int
+  ): SafeResult<SearchResultData> {
+    return safeApiCall(dispatcher) {
+      client.get {
+        /**
+         * Remove the header if you want to run the API without
+         * authentication/token. Note that the rate limit is
+         * 60 API hits per hour for unauthenticated users.
+         */
+        headers {
+          append(HttpHeaders.Authorization, "token ${BuildConfig.ACCESS_TOKEN}")
+        }
+        url(HttpRoutes.getSearchReposWithQueryUrl(query = query, perPage = perPage, page = page))
       }
     }
   }

@@ -1,4 +1,4 @@
-package com.hiteshchopra.github.domain.model
+package com.hiteshchopra.github.domain.model.repo
 
 import com.google.gson.annotations.SerializedName
 import com.hiteshchopra.github.domain.mapper.DomainModel
