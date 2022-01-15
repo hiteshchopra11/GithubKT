@@ -11,6 +11,7 @@ buildscript {
     coroutines_version = '1.6.0'
     ktor_version = '1.6.7'
     paging_version = '3.1.0'
+    room_version = '2.4.1'
   }
   repositories {
     mavenCentral()

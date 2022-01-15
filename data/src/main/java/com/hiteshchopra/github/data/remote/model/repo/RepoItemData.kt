@@ -1,9 +1,9 @@
-package com.hiteshchopra.github.data.remote.model
+package com.hiteshchopra.github.data.remote.model.repo
 
 import com.google.gson.annotations.SerializedName
 import com.hiteshchopra.github.data.mapper.DataModel
 import com.hiteshchopra.github.data.mapper.EntityMapper
-import com.hiteshchopra.github.domain.model.RepoItemDomain
+import com.hiteshchopra.github.domain.model.repo.RepoItemDomain
 
 data class RepoItemData(
   @SerializedName("archive_url")
@@ -77,7 +77,7 @@ data class RepoItemData(
   @SerializedName("html_url")
   val htmlUrl: String?,
   @SerializedName("id")
-  val id: Int?,
+  val id: Int,
   @SerializedName("is_template")
   val isTemplate: Boolean?,
   @SerializedName("issue_comment_url")

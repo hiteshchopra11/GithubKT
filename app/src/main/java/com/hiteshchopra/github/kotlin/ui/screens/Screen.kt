@@ -9,4 +9,6 @@ sealed class Screen(val route: String) {
       return "details_screen/$repoItem"
     }
   }
+
+  object Search : Screen(route = "search_screen")
 }

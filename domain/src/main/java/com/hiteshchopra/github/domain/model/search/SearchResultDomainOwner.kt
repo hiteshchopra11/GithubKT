@@ -1,11 +1,9 @@
-package com.hiteshchopra.github.domain.model
+package com.hiteshchopra.github.domain.model.search
 
 import com.google.gson.annotations.SerializedName
 import com.hiteshchopra.github.domain.mapper.DomainModel
-import kotlinx.serialization.Serializable
 
-@Serializable
-data class RepoItemOwnerDomain(
+data class SearchResultDomainOwner(
   @SerializedName("avatar_url")
   val avatarUrl: String?,
   @SerializedName("events_url")
